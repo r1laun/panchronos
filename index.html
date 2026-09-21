@@ -1,0 +1,94 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Панхронос</title>
+  <link rel="stylesheet" href="./styles.css" />
+</head>
+<body data-page="write">
+  <header class="topbar">
+    <div class="topbar-inner">
+      <a class="brand" href="./index.html" data-i18n="app.name">Панхронос</a>
+      <nav class="nav">
+        <a href="./index.html" class="active" data-i18n="nav.write">Сегодня</a>
+        <a href="./archive.html" data-i18n="nav.archive">Архив</a>
+      </nav>
+      <div class="lang-switch">
+        <button type="button" data-lang="ru">RU</button>
+        <button type="button" data-lang="en">EN</button>
+      </div>
+      <button type="button" id="logoutBtn" class="linklike" data-i18n="nav.logout" hidden>Выйти</button>
+    </div>
+  </header>
+
+  <main>
+    <p class="muted small" data-i18n="app.tagline">Ответ — Мысль — Вопрос. Вопрос сегодня, ответ через 14 записей.</p>
+    <div id="notice"></div>
+
+    <!-- Auth -->
+    <section id="authSection" class="card" hidden>
+      <h1 data-i18n="auth.title">Вход / Регистрация</h1>
+      <div class="tabs">
+        <button type="button" id="tabLogin" data-i18n="auth.login">Вход</button>
+        <button type="button" id="tabSignup" data-i18n="auth.signup">Регистрация</button>
+      </div>
+      <form id="authForm">
+        <label for="emailInput" data-i18n="auth.email">Email</label>
+        <input id="emailInput" type="email" autocomplete="email" required />
+        <label for="passwordInput" data-i18n="auth.password">Пароль</label>
+        <input id="passwordInput" type="password" autocomplete="current-password" required />
+        <button class="primary" type="submit" id="authSubmit">Войти</button>
+      </form>
+      <p><button type="button" id="resetToggle" class="linklike" data-i18n="auth.reset">Забыли пароль?</button></p>
+      <form id="resetForm" hidden>
+        <label for="resetEmailInput" data-i18n="auth.email">Email</label>
+        <input id="resetEmailInput" type="email" autocomplete="email" />
+        <button class="primary" type="submit" data-i18n="auth.submit.reset">Отправить ссылку для сброса</button>
+        <p><button type="button" id="resetBack" class="linklike" data-i18n="auth.back.login">← Назад ко входу</button></p>
+      </form>
+    </section>
+
+    <!-- Verify gate -->
+    <section id="verifySection" class="card" hidden>
+      <h1 data-i18n="verify.title">Подтвердите email</h1>
+      <p data-i18n="verify.text">Вы вошли, но email ещё не подтверждён. Перейдите по ссылке из письма — до подтверждения дневник недоступен.</p>
+    </section>
+
+    <!-- Write -->
+    <section id="writeSection" class="card" hidden>
+      <h1><span data-i18n="write.title">Запись</span> <span id="entryNo"></span></h1>
+      <p id="earlyHint" class="muted small" data-i18n="write.hint.early" hidden>Записи №1–14: поле «Ответ» пока неактивно. Оно появится на записи №15.</p>
+
+      <div id="contextBlock" hidden>
+        <h2><span data-i18n="write.context.title">Контекст из записи</span> <span id="contextNo"></span></h2>
+        <div class="context" id="contextText"></div>
+      </div>
+
+      <form id="writeForm">
+        <div id="answerWrap">
+          <label for="answerInput" data-i18n="write.answer">Ответ</label>
+          <textarea id="answerInput"></textarea>
+        </div>
+        <label for="thoughtInput" data-i18n="write.thought">Мысль</label>
+        <textarea id="thoughtInput" data-i18n-ph="write.thought.ph" placeholder="О чём думается сегодня…"></textarea>
+        <label for="questionInput" data-i18n="write.question">Вопрос</label>
+        <textarea id="questionInput" data-i18n-ph="write.question.ph" placeholder="Вопрос себе через 14 записей…"></textarea>
+        <button class="primary" type="submit" data-i18n="write.submit">Сохранить запись</button>
+      </form>
+      <p class="muted small">№1–14 → №15 · N отвечает на N−14 · UTC · после сохранения изменить/удалить нельзя.</p>
+    </section>
+
+    <!-- Done / countdown -->
+    <section id="doneSection" class="card" hidden>
+      <h1 data-i18n="done.title">На сегодня всё</h1>
+      <p data-i18n="done.text">Запись на сегодня уже сделана.</p>
+      <p id="countdownText" class="muted"></p>
+      <p><a href="./archive.html" data-i18n="nav.archive">Архив</a></p>
+    </section>
+  </main>
+
+  <script src="./config.js"></script>
+  <script type="module" src="./app.js"></script>
+</body>
+</html>
