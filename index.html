@@ -4,6 +4,11 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Панхронос</title>
+  <meta name="theme-color" content="#edf0f2" media="(prefers-color-scheme: light)" />
+  <meta name="theme-color" content="#10151f" media="(prefers-color-scheme: dark)" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Golos+Text:wght@400;500;600&family=Literata:ital,opsz,wght@0,7..72,400..600;1,7..72,400..600&display=swap&subset=cyrillic" rel="stylesheet" />
   <link rel="stylesheet" href="./styles.css" />
 </head>
 <body data-page="write">
@@ -23,12 +28,12 @@
   </header>
 
   <main>
-    <p class="muted small" data-i18n="app.tagline">Ответ — Мысль — Вопрос. Вопрос сегодня, ответ через 14 записей.</p>
     <div id="notice"></div>
 
     <!-- Auth -->
     <section id="authSection" class="card" hidden>
-      <h1 data-i18n="auth.title">Вход / Регистрация</h1>
+      <p class="lede" data-i18n="app.tagline">Ответ — Мысль — Вопрос. Вопрос сегодня, ответ через 14 записей.</p>
+      <h1 class="sr-only" data-i18n="auth.title">Вход / Регистрация</h1>
       <div class="tabs">
         <button type="button" id="tabLogin" data-i18n="auth.login">Вход</button>
         <button type="button" id="tabSignup" data-i18n="auth.signup">Регистрация</button>
@@ -58,6 +63,10 @@
     <!-- Write -->
     <section id="writeSection" class="card" hidden>
       <h1><span data-i18n="write.title">Запись</span> <span id="entryNo"></span></h1>
+      <div class="rail" aria-hidden="true">
+        <ol id="lagRail"></ol>
+        <div class="rail-ends"><span id="railFrom"></span><span id="railTo"></span></div>
+      </div>
       <p id="earlyHint" class="muted small" data-i18n="write.hint.early" hidden>Записи №1–14: поле «Ответ» пока неактивно. Оно появится на записи №15.</p>
 
       <div id="contextBlock" hidden>
@@ -66,17 +75,21 @@
       </div>
 
       <form id="writeForm">
-        <div id="answerWrap">
+        <div id="answerWrap" class="field field--past">
           <label for="answerInput" data-i18n="write.answer">Ответ</label>
           <textarea id="answerInput"></textarea>
         </div>
-        <label for="thoughtInput" data-i18n="write.thought">Мысль</label>
-        <textarea id="thoughtInput" data-i18n-ph="write.thought.ph" placeholder="О чём думается сегодня…"></textarea>
-        <label for="questionInput" data-i18n="write.question">Вопрос</label>
-        <textarea id="questionInput" data-i18n-ph="write.question.ph" placeholder="Вопрос себе через 14 записей…"></textarea>
+        <div class="field">
+          <label for="thoughtInput" data-i18n="write.thought">Мысль</label>
+          <textarea id="thoughtInput" data-i18n-ph="write.thought.ph" placeholder="О чём думается сегодня…"></textarea>
+        </div>
+        <div class="field field--future">
+          <label for="questionInput" data-i18n="write.question">Вопрос</label>
+          <textarea id="questionInput" data-i18n-ph="write.question.ph" placeholder="Вопрос себе через 14 записей…"></textarea>
+        </div>
         <button class="primary" type="submit" data-i18n="write.submit">Сохранить запись</button>
       </form>
-      <p class="muted small">№1–14 → №15 · N отвечает на N−14 · UTC · после сохранения изменить/удалить нельзя.</p>
+      <p class="footnote" data-i18n="write.footnote">После сохранения запись нельзя изменить или удалить. Сутки считаются по UTC.</p>
     </section>
 
     <!-- Done / countdown -->

@@ -39,6 +39,7 @@ const STRINGS = {
     'write.submit': 'Сохранить запись',
     'write.saved': 'Запись №{n} сохранена. Её нельзя будет изменить или удалить.',
     'write.hint.early': 'Записи №1–14: поле «Ответ» пока неактивно. Оно появится на записи №15.',
+    'write.footnote': 'После сохранения запись нельзя изменить или удалить. Сутки считаются по UTC.',
     'write.error.empty': 'Заполните все активные поля.',
     'write.error.generic': 'Не удалось сохранить: ',
 
@@ -91,6 +92,7 @@ const STRINGS = {
     'write.submit': 'Save entry',
     'write.saved': 'Entry #{n} saved. It cannot be edited or deleted afterwards.',
     'write.hint.early': 'Entries #1–14: the “Answer” field is not active yet. It unlocks at entry #15.',
+    'write.footnote': 'Entries cannot be edited or deleted after saving. Days are counted in UTC.',
     'write.error.empty': 'Please fill in all active fields.',
     'write.error.generic': 'Could not save: ',
 

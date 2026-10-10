@@ -155,6 +155,20 @@ function initAuthForms() {
   }
 }
 
+function renderRail(next, needsAnswer) {
+  const rail = $('lagRail');
+  if (!rail) return;
+  let html = '';
+  for (let i = 0; i <= LAG; i++) {
+    const n = next - LAG + i;
+    const cls = i === LAG ? 'is-today' : (i === 0 && needsAnswer) ? 'is-answering' : '';
+    html += `<li class="${cls}${n < 1 ? ' is-void' : ''}" style="--i:${i}"></li>`;
+  }
+  rail.innerHTML = html;
+  $('railFrom').textContent = needsAnswer ? '№' + (next - LAG) : '';
+  $('railTo').textContent = '№' + next;
+}
+
 // --- write page ---
 async function bootWrite(user) {
   setVisible('authSection', !user);
@@ -202,6 +216,7 @@ async function bootWrite(user) {
     $('entryNo').textContent = '№' + next;
 
     const needsAnswer = next > WARMUP_MAX;
+    renderRail(next, needsAnswer);
     setVisible('earlyHint', !needsAnswer);
 
     const answerInput = $('answerInput');
@@ -332,20 +347,20 @@ async function bootArchive(user) {
     return;
   }
   if (!data.length) {
-    list.innerHTML = `<div class="card"><p>${esc(t('archive.empty'))}</p></div>`;
+    list.innerHTML = `<p>${esc(t('archive.empty'))}</p>`;
     return;
   }
   list.innerHTML = data.map((row) => {
     const date = new Date(row.created_at).toISOString().slice(0, 10);
-    // Единый текст без ярлыков: абзацы Ответ? + Мысль + Вопрос.
+    // Единый текст без ярлыков: абзацы Ответ? + Мысль + Вопрос (цвет — только намёк).
     const paras = [];
-    if (row.answer) paras.push(`<p>${esc(row.answer)}</p>`);
+    if (row.answer) paras.push(`<p class="a">${esc(row.answer)}</p>`);
     paras.push(`<p>${esc(row.thought)}</p>`);
-    paras.push(`<p>${esc(row.question)}</p>`);
-    return `<article class="card entry">
-      <div class="muted small">${esc(t('archive.meta', { n: row.entry_number, d: date }))}</div>
-      ${paras.join('')}
-      <div class="muted small">${esc(t('archive.question.note', { n: row.entry_number + LAG }))}</div>
+    paras.push(`<p class="q">${esc(row.question)}</p>`);
+    return `<article class="entry">
+      <header class="entry-head"><span class="entry-no">№${row.entry_number}</span><time datetime="${date}">${date}</time></header>
+      <div class="entry-body">${paras.join('')}</div>
+      <p class="entry-note">${esc(t('archive.question.note', { n: row.entry_number + LAG }))}</p>
     </article>`;
   }).join('');
 }
